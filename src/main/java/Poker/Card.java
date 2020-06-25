@@ -19,7 +19,6 @@ public class Card {
                 this.pokerSuits[temp] = str.charAt(temp * 3 + 1);
             }
         }
-
         return status;
     }
 
@@ -30,16 +29,16 @@ public class Card {
             int ret = 0;
             switch(ch) {
             case 'A':
-                ret = 14;
-                break;
-            case 'J':
-                ret = 11;
-                break;
-            case 'K':
                 ret = 13;
                 break;
-            case 'Q':
+            case 'J':
+                ret = 10;
+                break;
+            case 'K':
                 ret = 12;
+                break;
+            case 'Q':
+                ret = 11;
             }
 
             return ret;
@@ -70,7 +69,7 @@ public class Card {
                     this.pokerNums[i++] = this.pokerNums[j];
                 }
 
-                while(i < j && this.pokerNums[i] < present) {
+                while(i < j && this.pokerNums[i] <= present) {
                     ++i;
                 }
 

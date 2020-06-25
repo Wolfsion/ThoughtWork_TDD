@@ -22,7 +22,7 @@ class AppTest {
 
     @Test void cardPowerShouldReturn1() {
         Poker testCase = new Poker();
-        Integer power = testCase.cardPower("2H 4S 4C 3D 4H");
+        Integer power = testCase.cardPower("2H 4S 5C 3D 4H");
         Assertions.assertEquals(1, power);
     }
 
@@ -40,7 +40,7 @@ class AppTest {
 
     @Test void cardPowerShouldReturn4() {
         Poker testCase = new Poker();
-        Integer power = testCase.cardPower("1H 2S 3C 4D 5C");
+        Integer power = testCase.cardPower("2S 3C 4D 5C 6D");
         Assertions.assertEquals(4, power);
     }
 
@@ -57,6 +57,7 @@ class AppTest {
     }
 
     // 比较函数手牌大小的测试
+    // 题目要求用例
     @Test void compareTestCaseWhiteWin1() {
         Poker testCase = new Poker();
         String realResult = testCase.compare("2H 3D 5S 9C KD", "2C 3H 4S 8C AH");
@@ -79,5 +80,24 @@ class AppTest {
         Poker testCase = new Poker();
         String realResult = testCase.compare("2H 3D 5S 9C KD", "2D 3H 5C 9S KH");
         Assertions.assertEquals("Tie" ,realResult);
+    }
+
+    // 附加测试用例
+    @Test void compareTestCaseWhiteWin3() {
+        Poker testCase = new Poker();
+        String realResult = testCase.compare("2H 4S 4C 3D 4H", "2S 4S 4S QS 4S");
+        Assertions.assertEquals("White wins" ,realResult);
+    }
+
+    @Test void compareTestCaseWhiteWin4() {
+        Poker testCase = new Poker();
+        String realResult = testCase.compare("2H 4S 4C 6D 6H", "KD 4S 4S 6S 6S");
+        Assertions.assertEquals("White wins" ,realResult);
+    }
+
+    @Test void compareTestBlackWin2() {
+        Poker testCase = new Poker();
+        String realResult = testCase.compare("KH 4S 4C 6D 6H", "2S 4S 4D 6H 6S");
+        Assertions.assertEquals("Black wins" ,realResult);
     }
 }

@@ -10,34 +10,102 @@ public class Poker {
     	Card cad = new Card();
     	cad.setter(str);
     	Judger jer = new Judger(cad.getNum(),cad.getSuit());
-    	int ret = jer.getRet();
+    	jer.judge();
+    	Integer ret = jer.getRet();
         return ret;  // 输入错误返回-1
     }
 
     public String compare(String blackCard, String whiteCard) {
-        // 题目要求的测试用例
+
     	String winStr = null;
     	int win = 0;
     	
     	Card cadB = new Card();
     	cadB.setter(blackCard);
     	Judger jerB = new Judger(cadB.getNum(),cadB.getSuit());
+		jerB.judge();
     	int retB = jerB.getRet();
     	
     	Card cadW = new Card();
-    	cadW.setter(blackCard);
+    	cadW.setter(whiteCard);
     	Judger jerW = new Judger(cadW.getNum(),cadW.getSuit());
+    	jerW.judge();
     	int retW = jerW.getRet();
     	
     	if(retB < retW)
     		win = 1;
     	else if(retB == retW) {
-    		int maxB = jerB.getMaxNum();
-    		int maxW = jerW.getMaxNum();
-    		if(maxB < maxW)
-    			win = 1;
-    		else if(maxB == maxW)
-    			win = 2;
+    		if(retB != 1 && retB != 2 && retB != 3) {
+				for(int i=0;i<Card.Size;i++) {
+					int maxB = jerB.getMaxNum(i);
+					int maxW = jerW.getMaxNum(i);
+					if(maxB < maxW) {
+						win = 1;
+						break;
+					}
+
+					else if(maxB == maxW) {
+						win = 2;
+						break;
+					}
+				}
+			}
+			else {
+				int[] arrB = cadB.getNum();
+				int[] arrW = cadW.getNum();
+
+				if(retB == 1 || retB == 3) {
+					if( arrB[jerB.pairOne] < arrW[jerW.pairOne] ) {
+						win = 1;
+					}
+					else if( arrB[jerB.pairOne] == arrW[jerW.pairOne] )
+					{
+						win = 2;
+						for(int i=0;i<Card.Size;i++) {
+							int maxB = jerB.getMaxNum(i);
+							int maxW = jerW.getMaxNum(i);
+
+							if(maxB < maxW) {
+								win = 1;
+								break;
+							}
+							else if(maxB > maxW) {
+								win = 0;
+								break;
+							}
+						}
+					}
+				}
+				else if(retB == 2) {
+					if( arrB[jerB.pairOne] < arrW[jerW.pairOne] ) {
+						win = 1;
+					}
+					else if( arrB[jerB.pairOne] == arrW[jerW.pairOne] )
+					{
+						if( arrB[jerB.pairTwo] < arrW[jerW.pairTwo] ) {
+							win = 1;
+						}
+						else if( arrB[jerB.pairTwo] == arrW[jerW.pairTwo] )
+						{
+							win = 2;
+							for(int i=0;i<Card.Size;i++) {
+								int maxB = jerB.getMaxNum(i);
+								int maxW = jerW.getMaxNum(i);
+
+								if(maxB < maxW) {
+									win = 1;
+									break;
+								}
+								else if(maxB > maxW) {
+									win = 0;
+									break;
+								}
+							}
+						}
+
+					}
+				}
+			}
     	}
 
     	switch(win) {

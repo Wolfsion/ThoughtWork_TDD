@@ -7,6 +7,8 @@ public class Judger {
     private int maxNum = 0;
     static final int ExtendSize = 3;
     static final int PairIndex = 2;
+    public int pairOne = 0;
+    public int pairTwo = 0;
     private int[] extend = new int[ExtendSize];      
 
     public Judger(int[] pokerNum, char[] pokerSuits) {
@@ -14,7 +16,7 @@ public class Judger {
         this.suits = pokerSuits;
     }
 
-    //同花�?
+    //同花顺
     private boolean straightFlush() {
     	boolean flag = false;
     	if(flush() && straight()) {
@@ -63,6 +65,7 @@ public class Judger {
     			cnt++;
     		}
     		if(cnt >= 2) {
+    			this.pairOne = temp;
     			flag = true;
     			break;
     		}					
@@ -70,7 +73,7 @@ public class Judger {
     	return flag;
     }
 
-    //两�??
+    //两对
     private boolean twoPairs() {
     	boolean flag = false;
     	if(pair()) {
@@ -87,6 +90,7 @@ public class Judger {
         			cnt++;
         		}
         		if(cnt >= 1) {
+					this.pairTwo = temp;
         			flag = true;
         			break;
         		}					
@@ -107,6 +111,7 @@ public class Judger {
     			cnt++;
     		}
     		if(cnt >= 1) {
+    			this.pairOne = temp;
     			flag = true;
     			extend[PairIndex] = numPresent;
     			break;
@@ -151,9 +156,11 @@ public class Judger {
         return this.result;
     }
 
-    public int getMaxNum() {
-    	maxNum = nums[Card.Size - 1];
-        return maxNum;
+    public int getMaxNum(int index) {
+        return nums[Card.Size - 1 - index];
     }
-    
+
+	public int getMaxNum() {
+		return nums[Card.Size - 1];
+	}
 }

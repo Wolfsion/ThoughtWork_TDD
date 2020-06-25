@@ -9,6 +9,6 @@ public class App {
     }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        System.out.println(new Poker().compare("KH 4S 4C 6D 6H", "2S 4S 4D 6H 6S"));
     }
 }
